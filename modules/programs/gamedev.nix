@@ -9,11 +9,10 @@
 
     environment.systemPackages = with pkgs; [
       # aseprite
+      (pkgs.bottles.override {removeWarningPopup = true; })
       dotnet-sdk
       godot-mono
       obs-studio
-      # wine
-      wineWow64Packages.stable
       winetricks
     ];
   };
