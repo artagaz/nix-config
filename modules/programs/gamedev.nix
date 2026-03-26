@@ -12,8 +12,9 @@
       (pkgs.bottles.override {removeWarningPopup = true; })
       dotnet-sdk
       godot-mono
+      handbrake
       obs-studio
-      winetricks
+      video-trimmer
     ];
   };
 }

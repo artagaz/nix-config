@@ -84,20 +84,20 @@
                 "on-click" = "kitty --hold sh -c 'bluetui'";
             };
             "network" = {
-                "format-wifi" = "  {essid}";
+                "format-wifi" = " {essid}";
                 "format-disconnected" = "󰖪";
                 "on-click" = "kitty --hold sh -c 'nmtui'";
             };
             "wireplumber" = {
-                "format" = "{icon}  {volume}%";
-                "format-muted" = " ";
+                "format" = "{icon} {volume}%";
+                "format-muted" = "󰖁";
                 "format-icons" = {
                     "default" = ["" "" ""];
                 };
                 "on-click" = "kitty --hold sh -c 'wiremix'";
             };
             "custom/power" = {
-                "format"  = "⏻ ";
+                "format"  = "⏻";
                 "on-click" = "systemctl suspend";
                 # "shutdown" = "shutdown";
                 # "reboot" = "reboot";
@@ -112,7 +112,7 @@
 
             * {
                 /* `otf-font-awesome` is required to be installed for icons */
-                font-family: FontAwesome, JetBrainsMonoNerdFont;
+                font-family: FontAwesome, JetBrainsMonoNerdFontPropo;
                 font-size: 13pt;
             }
 

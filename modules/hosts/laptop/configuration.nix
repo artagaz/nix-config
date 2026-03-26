@@ -15,7 +15,9 @@
       self.nixosModules.gaming
       self.nixosModules.home-manager
       self.nixosModules.kitty
-      self.nixosModules.niri
+      self.nixosModules.vpn
+      # self.nixosModules.niri
+      self.nixosModules.plasma
       self.nixosModules.zen-browser
     ];
 

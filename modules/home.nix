@@ -9,6 +9,7 @@
       useGlobalPkgs = true;
       useUserPackages = true;
       extraSpecialArgs = { inherit inputs self; };
+      backupCommand = "rm";
 
       users.matthew = {
         home.stateVersion = "25.11";

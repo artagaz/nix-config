@@ -9,7 +9,8 @@
     ];
 
     programs.niri.enable = true;
-    services.displayManager.gdm.enable = true;
+    # services.displayManager.gdm.enable = true;
+    services.displayManager.ly.enable = true;
 
     services.udisks2.enable = true; # Removable media.
     services.gvfs.enable = true; # Nautilus mount and trash support.
