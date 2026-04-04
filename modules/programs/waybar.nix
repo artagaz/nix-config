@@ -1,4 +1,3 @@
-{ self, ... }:
 {
   flake.nixosModules.waybar = { pkgs, ... }:
   {
@@ -19,9 +18,9 @@
           bar = {
             height = 24;
             spacing = 4;
-            modules-left = [ "niri/workspaces" ];
+            modules-left = [ "niri/workspaces" "niri/language" ];
             modules-center = [ "niri/window" ];
-            modules-right = [ "niri/language" "tray" "wireplumber" "network" "bluetooth" "power-profiles-daemon" "backlight" "battery" "battery#bat2" "clock" "custom/power" ];
+            modules-right = [ "tray" "wireplumber" "network" "bluetooth" "power-profiles-daemon" "backlight" "battery" "battery#bat2" "clock" "custom/power" ];
             "niri/workspaces" = {
               "disable-scroll" = true;
               "all-outputs" = true;
@@ -114,13 +113,13 @@
                 /* `otf-font-awesome` is required to be installed for icons */
                 font-family: FontAwesome, JetBrainsMonoNerdFontPropo;
                 font-size: 13pt;
+                transition-property: background-color;
+                transition-duration: .25s;
             }
 
             window#waybar {
                 background-color: @background;
                 color: @cursor;
-                transition-property: background-color;
-                transition-duration: .5s;
             }
 
             button {
@@ -128,7 +127,8 @@
                 box-shadow: inset 0 -3px transparent;
                 /* Avoid rounded borders under each button name */
                 border: none;
-                border-radius: 0;
+                border-radius: 4;
+                margin: 2 2;
             }
 
             #workspaces button {
@@ -137,11 +137,12 @@
             }
 
             #workspaces button:hover {
-                background: rgba(0, 0, 0, 0.2);
+                background: @color1;
             }
 
             #workspaces button.focused, #workspaces button.active {
-                background-color: @color2;
+                background-color: @color8;
+                color: @background;
                 /* box-shadow: inset 0 -3px @color3; */
             }
 
@@ -158,9 +159,30 @@
             #power-profiles-daemon,
             #battery,
             #clock,
-            #power {
+            #custom-power {
+                margin: 2 0;
                 padding: 0 10px;
                 color: @cursor;
+                border-radius: 4;
+            }
+
+            #bluetooth,
+            #wireplumber,
+            #custom-power,
+            #network {
+                background-color: @color4;
+                color: @background;
+            }
+
+            #custom-power {
+                background-color: @color8;
+            }
+
+            #bluetooth:hover,
+            #wireplumber:hover,
+            #network:hover,
+            #custom-power:hover {
+                background-color: @color3;
             }
 
             #window,

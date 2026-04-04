@@ -1,6 +1,6 @@
 { self, ... }:
 {
-  flake.nixosModules.niri = { pkgs, lib, ... }:
+  flake.nixosModules.niri = { pkgs, lib, config, ... }:
   {
     imports = [
       self.nixosModules.wofi 
@@ -9,9 +9,22 @@
     ];
 
     programs.niri.enable = true;
-    # services.displayManager.gdm.enable = true;
-    services.displayManager.ly.enable = true;
-    security.polkit.enable = true; # Enable polkit.
+
+    services.displayManager.ly = 
+    let
+      xsession-wrapper = pkgs.runCommand "xsession-wrapper-fixed" {
+        src = config.services.displayManager.sessionData.wrapper;
+      } ''
+        cp --preserve=mode $src $out
+        substituteInPlace $out --replace "X-NIXOS-SYSTEMD-AWARE" "X-NIXOS-SYSTEMD-AWARE|niri"
+      '';
+    in {
+      enable = true;
+      x11Support = false;
+      settings = {
+        setup_cmd = "${xsession-wrapper}";
+      };
+    };
 
     services.udisks2.enable = true; # Removable media.
     services.gvfs.enable = true; # Nautilus mount and trash support.
@@ -39,11 +52,22 @@
     {
       home.activation = {
         pywal = ''
-          ${pkgs.pywal}/bin/wal -i /home/matthew/Pictures/iriza-katou.jpg --cols16 --saturate 0.15
+          ${pkgs.pywal}/bin/wal -i /home/matthew/Pictures/iriza-katou.jpg --saturate 0.25
         '';
       };
 
       services.polkit-gnome.enable = true; # Enable Gnome polkit.
+
+      systemd.user.services.polkit-gnome = {
+        Service = {
+          Restart = "on-failure";
+          RestartSec = 1;
+        };
+        Unit = {
+          StartLimitIntervalSec = 30;
+          StartLimitBurst = 10;
+        };
+      };
 
       # Symlink config file.
       xdg.configFile."niri/config.kdl".source = ./config.kdl;
