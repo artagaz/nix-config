@@ -108,12 +108,31 @@
           package = pkgs.bibata-cursors;
           size = 24;
         };
+        font = {
+          name = "JetBrainsMonoNerdFont";
+          package = pkgs.nerd-fonts.jetbrains-mono;
+          size = 13;
+        };
       };
 
       # Make QT follow GTK theme.
       qt = {
         enable = true;
         platformTheme.name = "gtk3";
+
+        qt5ctSettings = {
+          Fonts = {
+            fixed = "\"JetBrainsMonoNerdFontMono,13\"";
+            general = "\"JetBrainsMonoNerdFontMono,13\"";
+          };
+        };
+
+        qt6ctSettings = {
+          Fonts = {
+            fixed = "\"JetBrainsMonoNerdFontMono,13\"";
+            general = "\"JetBrainsMonoNerdFontMono,13\"";
+          };
+        };
       };
     }
     ];
