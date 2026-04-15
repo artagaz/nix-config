@@ -23,6 +23,7 @@
       x11Support = false;
       settings = {
         setup_cmd = "${xsession-wrapper}";
+        session_log = ".ly-session.log";
       };
     };
 
@@ -52,7 +53,13 @@
     {
       home.activation = {
         pywal = ''
-          ${pkgs.pywal}/bin/wal -i ${self.wallpaper} --saturate 0.25
+          ${pkgs.pywal}/bin/wal -i ${self.wallpaper}
+        '';
+        swaybg = ''
+          ${pkgs.swaybg}/bin/swaybg -i ${self.wallpaper} &
+        '';
+        waybar = ''
+          ${pkgs.procps}/bin/pkill -SIGUSR2 waybar
         '';
       };
 
