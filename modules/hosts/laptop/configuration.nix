@@ -87,6 +87,7 @@
     environment.systemPackages = with pkgs; [
       gnome-clocks
       kdePackages.okular
+      kdePackages.partitionmanager
       krita
       obsidian
       telegram-desktop
@@ -96,6 +97,7 @@
     # List font packages installed in system profile.
     fonts.packages = with pkgs; [
       nerd-fonts.jetbrains-mono
+      nerd-fonts.terminess-ttf
     ];
 
     fileSystems = {

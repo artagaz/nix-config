@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   flake.nixosModules.kitty = {
     home-manager.users.matthew.imports = [
@@ -5,7 +6,7 @@
       programs.kitty = {
         enable = true;
         font = {
-          name = "JetBrainsMonoNerdFontMono";
+          name = "${self.font}Mono";
           size = 13;
         };
         settings = {

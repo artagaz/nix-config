@@ -1,3 +1,4 @@
+{ self, ... }:
 {
   flake.nixosModules.waybar = { pkgs, ... }:
   {
@@ -97,7 +98,7 @@
 
             * {
                 /* `otf-font-awesome` is required to be installed for icons */
-                font-family: FontAwesome, JetBrainsMonoNerdFontPropo;
+                font-family: FontAwesome, ${self.font}Propo;
                 font-size: 13pt;
                 transition-property: background-color;
                 transition-duration: .25s;

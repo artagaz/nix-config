@@ -3,7 +3,6 @@
   flake.nixosModules.niri = { pkgs, lib, config, ... }:
   {
     imports = [
-      self.nixosModules.wofi 
       self.nixosModules.waybar
       self.nixosModules.matugen
     ];
@@ -54,6 +53,22 @@
         pywal = ''
           ${pkgs.pywal}/bin/wal -i /home/matthew/Pictures/iriza-katou.jpg --saturate 0.25
         '';
+      };
+
+      programs.rofi = {
+        enable = true;
+        font = "${self.font}Mono 18";
+        extraConfig = {
+          kb-row-up = "Up,Control+k,Shift+Tab,Shift+ISO_Left_Tab";
+          kb-row-down = "Down,Control+j";
+          kb-accept-entry = "Control+m,Return,KP_Enter";
+          kb-remove-to-eol = "Control+Shift+e";
+          kb-mode-next = "Shift+Right,Control+Tab,Control+l";
+          kb-mode-previous = "Shift+Left,Control+Shift+Tab,Control+h";
+          kb-mode-complete = "";
+          kb-remove-char-back = "BackSpace";
+        };
+        theme = "~/.cache/wal/colors-rofi-dark.rasi";
       };
 
       services.polkit-gnome.enable = true; # Enable Gnome polkit.
@@ -109,8 +124,7 @@
           size = 24;
         };
         font = {
-          name = "JetBrainsMonoNerdFont";
-          package = pkgs.nerd-fonts.jetbrains-mono;
+          name = "${self.font}Mono";
           size = 13;
         };
       };
@@ -122,15 +136,15 @@
 
         qt5ctSettings = {
           Fonts = {
-            fixed = "\"JetBrainsMonoNerdFontMono,13\"";
-            general = "\"JetBrainsMonoNerdFontMono,13\"";
+            fixed = "\"${self.font}Mono,13\"";
+            general = "\"${self.font}Mono,13\"";
           };
         };
 
         qt6ctSettings = {
           Fonts = {
-            fixed = "\"JetBrainsMonoNerdFontMono,13\"";
-            general = "\"JetBrainsMonoNerdFontMono,13\"";
+            fixed = "\"${self.font}Mono,13\"";
+            general = "\"${self.font}Mono,13\"";
           };
         };
       };
