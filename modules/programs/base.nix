@@ -2,6 +2,7 @@
 {
   flake.nixosModules.base = { pkgs, ... }: {
     imports = [
+      self.nixosModules.kitty
       self.nixosModules.vpn
       self.nixosModules.zen-browser
     ];

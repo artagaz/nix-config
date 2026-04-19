@@ -3,10 +3,11 @@
   flake.nixosModules.niri = { pkgs, lib, config, ... }:
   {
     imports = [
-      self.nixosModules.kitty
       self.nixosModules.matugen
       self.nixosModules.waybar
     ];
+
+    kitty.pywal.enable = true;
 
     programs.niri.enable = true;
 
