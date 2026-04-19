@@ -19,9 +19,8 @@
       MOZ_USE_XINPUT2=1; # Fix Firefox-based browsers scroll on X11.
     };
 
-    # Define dconf options.
     home-manager.users.${self.user}.imports = [
-      self.homeModules.cinnamon-dconf 
+      self.homeModules.cinnamon-dconf # Define dconf options.
     ];
   };
 }

@@ -1,7 +1,5 @@
 {
-  flake.homeModules.cinnamon-dconf = { lib, ... }:
-  with lib.hm.gvariant;
-  {
+  flake.homeModules.cinnamon-dconf = { lib, ... }: with lib.hm.gvariant; {
     # Generated via dconf2nix: https://github.com/gvolpe/dconf2nix
     dconf.settings = {
       "org/cinnamon" = {
