@@ -3,6 +3,11 @@
     services.desktopManager.plasma6.enable = true;
     services.displayManager.plasma-login-manager.enable = true;
     services.power-profiles-daemon.enable = false;
+    services.xserver.enable = false;
+
+    environment.systemPackages = with pkgs; [ 
+      klassy 
+    ];
 
     nixpkgs.overlays = [
       (final: prev: {

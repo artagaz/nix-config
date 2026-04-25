@@ -1,16 +1,16 @@
-{ self, config, lib, ... }:
+{ self, ... }:
 {
-  options = {
-    pywal = {
-      enable = lib.mkOption {
-        default = false;
-        type = lib.types.bool;
+  flake.nixosModules.kitty = { config, lib, ... }: {
+    options = {
+      kitty.pywal = {
+        enable = lib.mkOption {
+          default = false;
+          type = lib.types.bool;
+        };
       };
     };
-  };
 
-  config = {
-    flake.nixosModules.kitty = {
+    config = {
       home-manager.users.${self.user}.imports = [
       {
         programs.kitty = {
@@ -22,8 +22,9 @@
           settings = {
             confirm_os_window_close = 0;
             # background_opacity = 0.85;
+            remember_window_size = "no";
           };
-          extraConfig = lib.mkIf config.pywal.enable ''
+          extraConfig = lib.mkIf config.kitty.pywal.enable ''
             include ~/.cache/wal/colors-kitty.conf
           '';
           themeFile = "gruvbox-dark";

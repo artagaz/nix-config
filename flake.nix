@@ -3,7 +3,12 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     import-tree.url = "github:vic/import-tree";
-    nix-wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+    # nix-wrapper-modules.url = "github:BirdeeHub/nix-wrapper-modules";
+
+    niri-flake = {
+      url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager";

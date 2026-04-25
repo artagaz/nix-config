@@ -118,7 +118,7 @@ output "eDP-1" {
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 8
+    gaps 4
 
     always-center-single-column
 
@@ -364,6 +364,10 @@ window-rule {
 window-rule {
     // geometry-corner-radius 0
     clip-to-geometry true
+    opacity 0.9
+    background-effect {
+        blur true
+    }
 }
 
 binds {

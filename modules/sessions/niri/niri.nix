@@ -1,4 +1,4 @@
-{ self, ... }:
+{ self, inputs, ... }:
 {
   flake.nixosModules.niri = { pkgs, lib, config, ... }:
   {
@@ -6,10 +6,15 @@
       self.nixosModules.matugen
       self.nixosModules.waybar
     ];
+    
+    nixpkgs.overlays = [ inputs.niri-flake.overlays.niri ];
 
     kitty.pywal.enable = true;
 
-    programs.niri.enable = true;
+    programs.niri = {
+      enable = true;
+      package = pkgs.niri-unstable;
+    };
 
     services.displayManager.ly = 
     let

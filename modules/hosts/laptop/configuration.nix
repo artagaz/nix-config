@@ -17,14 +17,26 @@
       self.nixosModules.fastfetch
       self.nixosModules.home-manager
 
-      self.nixosModules.cinnamon
-      # self.nixosModules.niri
+      # self.nixosModules.cinnamon
+      self.nixosModules.niri
       # self.nixosModules.plasma
     ];
 
     # Use the systemd-boot EFI boot loader.
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
+    boot.loader.timeout = 1;
+
+    # Use the GRUB EFI boot loader.
+    # boot.loader = {
+    #   grub = {
+    #     enable = true;
+    #     device = "nodev"; # "nodev" is used for UEFI
+    #     efiSupport = true;
+    #     useOSProber = true;
+    #   };
+    #   efi.canTouchEfiVariables = true;
+    # };
 
     # Enable flakes.
     nix.settings.experimental-features = [ "nix-command" "flakes" ];

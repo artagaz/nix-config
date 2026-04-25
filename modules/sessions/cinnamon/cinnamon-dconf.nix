@@ -4,10 +4,25 @@
     dconf.settings = {
       "org/cinnamon" = {
         alttab-switcher-delay = 100;
-        enabled-applets = [ "panel1:left:0:menu@cinnamon.org:0" "panel1:left:1:separator@cinnamon.org:1" "panel1:left:2:grouped-window-list@cinnamon.org:2" "panel1:right:0:systray@cinnamon.org:3" "panel1:right:1:xapp-status@cinnamon.org:4" "panel1:right:2:notifications@cinnamon.org:5" "panel1:right:3:printers@cinnamon.org:6" "panel1:right:4:removable-drives@cinnamon.org:7" "panel1:right:5:keyboard@cinnamon.org:8" "panel1:right:6:favorites@cinnamon.org:9" "panel1:right:7:network@cinnamon.org:10" "panel1:right:8:sound@cinnamon.org:11" "panel1:right:9:power@cinnamon.org:12" "panel1:right:10:calendar@cinnamon.org:13" "panel1:right:11:cornerbar@cinnamon.org:14" ];
-        next-applet-id = 15;
+        desklet-snap-interval = 25;
+        enabled-applets = [ "panel1:left:0:menu@cinnamon.org:0" "panel1:left:1:separator@cinnamon.org:1" "panel1:left:2:grouped-window-list@cinnamon.org:2" "panel1:right:2:systray@cinnamon.org:3" "panel1:right:3:xapp-status@cinnamon.org:4" "panel1:right:4:notifications@cinnamon.org:5" "panel1:right:5:printers@cinnamon.org:6" "panel1:right:6:removable-drives@cinnamon.org:7" "panel1:right:7:keyboard@cinnamon.org:8" "panel1:right:8:favorites@cinnamon.org:9" "panel1:right:9:network@cinnamon.org:10" "panel1:right:10:sound@cinnamon.org:11" "panel1:right:11:power@cinnamon.org:12" "panel1:right:12:calendar@cinnamon.org:13" "panel1:right:13:cornerbar@cinnamon.org:14" "panel1:right:1:weather@mockturtl:15" "panel1:center:0:workspace-switcher@cinnamon.org:16" ];
+        enabled-desklets = [];
+        next-applet-id = 17;
+        panel-edit-mode = false;
         panel-zone-symbolic-icon-sizes = "[{\"panelId\": 1, \"left\": 28, \"center\": 28, \"right\": 16}]";
         panels-height = [ "1:48" ];
+      };
+
+      "org/cinnamon/desktop/a11y/applications" = {
+        screen-reader-enabled = false;
+      };
+
+      "org/cinnamon/desktop/a11y/mouse" = {
+        dwell-click-enabled = false;
+        dwell-threshold = 10;
+        dwell-time = 1.2;
+        secondary-click-enabled = false;
+        secondary-click-time = 1.2;
       };
 
       "org/cinnamon/desktop/applications/calculator" = {
@@ -148,17 +163,20 @@
       };
 
       "org/cinnamon/gestures" = {
+        enabled = true;
+        pinch-percent-threshold = mkUint32 40;
         swipe-down-2 = "PUSH_TILE_DOWN::end";
-        swipe-down-3 = "TOGGLE_OVERVIEW::end";
+        swipe-down-3 = "TOGGLE_OVERVIEW::::start";
         swipe-down-4 = "VOLUME_DOWN::end";
         swipe-left-2 = "PUSH_TILE_LEFT::end";
-        swipe-left-3 = "WORKSPACE_NEXT::end";
+        swipe-left-3 = "WORKSPACE_NEXT::::start";
         swipe-left-4 = "WINDOW_WORKSPACE_PREVIOUS::end";
+        swipe-percent-threshold = mkUint32 60;
         swipe-right-2 = "PUSH_TILE_RIGHT::end";
-        swipe-right-3 = "WORKSPACE_PREVIOUS::end";
+        swipe-right-3 = "WORKSPACE_PREVIOUS::::start";
         swipe-right-4 = "WINDOW_WORKSPACE_NEXT::end";
         swipe-up-2 = "PUSH_TILE_UP::end";
-        swipe-up-3 = "TOGGLE_EXPO::end";
+        swipe-up-3 = "TOGGLE_EXPO::::start";
         swipe-up-4 = "VOLUME_UP::end";
         tap-3 = "MEDIA_PLAY_PAUSE::end";
       };

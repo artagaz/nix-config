@@ -23,42 +23,47 @@
       ];
 
       xdg.configFile = {
-        "matugen/config.toml".text = /* toml */ ''
-          [config]
-          [templates.gtk3]
-          input_path = '${builtins.toString ./templates/gtk-colors.css}'
-          output_path = '~/.config/gtk-3.0/colors.css'
+        "matugen/config.toml" = {
+          text = /* toml */ ''
+            [config]
+            [templates.gtk3]
+            input_path = '${builtins.toString ./templates/gtk-colors.css}'
+            output_path = '~/.config/gtk-3.0/colors.css'
 
-          [templates.gtk4]
-          input_path = '${builtins.toString ./templates/gtk-colors.css}'
-          output_path = '~/.config/gtk-4.0/colors.css'
+            [templates.gtk4]
+            input_path = '${builtins.toString ./templates/gtk-colors.css}'
+            output_path = '~/.config/gtk-4.0/colors.css'
 
-          [templates.color-scheme]
-          input_path = '${builtins.toString ./templates/Matugen.colors}'
-          output_path = '~/.local/share/color-schemes/Matugen.colors'
+            [templates.color-scheme]
+            input_path = '${builtins.toString ./templates/Matugen.colors}'
+            output_path = '~/.local/share/color-schemes/Matugen.colors'
 
-          [templates.qt5ct]
-          input_path = '${builtins.toString ./templates/qtct-colors.conf}'
-          output_path = '~/.config/qt5ct/colors/matugen.conf'
+            [templates.qt5ct]
+            input_path = '${builtins.toString ./templates/qtct-colors.conf}'
+            output_path = '~/.config/qt5ct/colors/matugen.conf'
 
-          [templates.qt6ct]
-          input_path = '${builtins.toString ./templates/qtct-colors.conf}'
-          output_path = '~/.config/qt6ct/colors/matugen.conf'
+            [templates.qt6ct]
+            input_path = '${builtins.toString ./templates/qtct-colors.conf}'
+            output_path = '~/.config/qt6ct/colors/matugen.conf'
 
-          [templates.niri]
-          input_path = '${builtins.toString ./templates/niri-colors.kdl}'
-          output_path = '~/.config/niri/colors.kdl'
-          # post_hook = 'niri msg action load-config-file'
+            [templates.niri]
+            input_path = '${builtins.toString ./templates/niri-colors.kdl}'
+            output_path = '~/.config/niri/colors.kdl'
+            # post_hook = 'niri msg action load-config-file'
 
-          [templates.dunst]
-          input_path = '${builtins.toString ./templates/dunstrc-colors}'
-          output_path = '~/.config/dunst/dunstrc.d/00-style.conf'
-          post_hook = 'dunstctl reload'
-        '';
-        "kdeglobals".text = ''
-          [UiSettings]
-          ColorScheme=Matugen
-        '';
+            [templates.dunst]
+            input_path = '${builtins.toString ./templates/dunstrc-colors}'
+            output_path = '~/.config/dunst/dunstrc.d/00-style.conf'
+            post_hook = 'dunstctl reload'
+          '';
+        };
+
+        "kdeglobals" = {
+          text = ''
+            [UiSettings]
+            ColorScheme=Matugen
+          '';
+        };
       };
 
       qt = {
