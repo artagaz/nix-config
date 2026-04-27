@@ -21,13 +21,13 @@
           };
           settings = {
             confirm_os_window_close = 0;
-            background_opacity = lib.mkIf config.kitty.pywal.enable 0.85;
             remember_window_size = "no";
           };
           extraConfig = lib.mkIf config.kitty.pywal.enable ''
             include ~/.cache/wal/colors-kitty.conf
+            background_opacity 0.85
           '';
-          themeFile = "gruvbox-dark";
+          themeFile = lib.mkIf (!config.kitty.pywal.enable) "Catppuccin-Mocha";
         };
       }
       ];
