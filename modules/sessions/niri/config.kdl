@@ -336,6 +336,16 @@ layer-rule {
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Window-Rules
 
+// Example: enable rounded corners for all windows.
+window-rule {
+    // geometry-corner-radius 0
+    clip-to-geometry true
+    // opacity 0.9
+    background-effect {
+        blur true
+    }
+}
+
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
 window-rule {
@@ -365,17 +375,6 @@ window-rule {
 
     // Use this instead if you want them visible on third-party screenshot tools.
     // block-out-from "screencast"
-}
-
-// Example: enable rounded corners for all windows.
-// (This example rule is commented out with a "/-" in front.)
-window-rule {
-    // geometry-corner-radius 0
-    clip-to-geometry true
-    opacity 0.9
-    background-effect {
-        blur true
-    }
 }
 
 binds {
