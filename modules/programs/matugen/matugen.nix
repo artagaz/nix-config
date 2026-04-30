@@ -49,12 +49,15 @@
             [templates.niri]
             input_path = '${builtins.toString ./templates/niri-colors.kdl}'
             output_path = '~/.config/niri/colors.kdl'
-            # post_hook = 'niri msg action load-config-file'
+
+            [templates.waybar]
+            input_path = '${builtins.toString ./templates/colors.css}'
+            output_path = '~/.config/waybar/colors.css'
 
             [templates.dunst]
             input_path = '${builtins.toString ./templates/dunstrc-colors}'
             output_path = '~/.config/dunst/dunstrc.d/00-style.conf'
-            post_hook = 'dunstctl reload'
+            # post_hook = 'dunstctl reload'
           '';
         };
 

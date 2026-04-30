@@ -2,7 +2,7 @@
 {
   flake.nixosModules.kitty = { config, lib, ... }: {
     options = {
-      kitty.pywal = {
+      kitty.wal = {
         enable = lib.mkOption {
           default = false;
           type = lib.types.bool;
@@ -23,11 +23,11 @@
             confirm_os_window_close = 0;
             remember_window_size = "no";
           };
-          extraConfig = lib.mkIf config.kitty.pywal.enable ''
+          extraConfig = lib.mkIf config.kitty.wal.enable ''
             include ~/.cache/wal/colors-kitty.conf
             background_opacity 0.85
           '';
-          themeFile = lib.mkIf (!config.kitty.pywal.enable) "Catppuccin-Mocha";
+          themeFile = lib.mkIf (!config.kitty.wal.enable) "Catppuccin-Mocha";
         };
       }
       ];

@@ -113,12 +113,18 @@ output "eDP-1" {
     // position x=1280 y=0
 }
 
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
 // https://yalter.github.io/niri/Configuration:-Layout
 layout {
     // Set gaps around windows in logical pixels.
-    gaps 4
+    gaps 8
 
     always-center-single-column
 
@@ -171,7 +177,7 @@ layout {
         // off
 
         // How many logical pixels the ring extends out from the windows.
-        width 1
+        width 2
 
         // Colors can be set in a variety of ways:
         // - CSS named colors: "red"
@@ -209,7 +215,7 @@ layout {
         // If you enable the border, you probably want to disable the focus ring.
         on
 
-        width 1
+        width 2
         // active-color "#ffc87f"
         // inactive-color "#505050"
 

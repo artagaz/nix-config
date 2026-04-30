@@ -18,7 +18,10 @@
         settings = {
           bar = {
             height = 24;
+            # width = 24;
+            layer = "top";
             spacing = 0;
+            position = "bottom";
             modules-left = [ "niri/workspaces" "niri/language" ];
             modules-center = [ "niri/window" ];
             modules-right = [ "tray" "wireplumber" "network" "bluetooth" "backlight" "clock" "battery" "battery#bat2" "custom/power" ];
@@ -30,6 +33,9 @@
             };
             "tray" = {
                 "spacing" = 10;
+            };
+            "niri/language" = {
+                "format" = "{short}";
             };
             "clock" = {
                 "tooltip-format" = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
@@ -47,8 +53,7 @@
                 };
                 "format" = "{icon} {capacity}%";
                 "format-full" = "{icon} {capacity}%";
-                "format-charging" = " {capacity}%";
-                "format-plugged" = " {capacity}%";
+                "format-charging" = " {capacity}%";
                 "format-icons" = ["" "" "" "" ""];
             };
             "battery#bat2" = {
@@ -94,7 +99,9 @@
         };
 
         style = /*css*/ ''
-          @import "/home/${self.user}/.cache/wal/colors-waybar.css";
+          /* @import "/home/${self.user}/.cache/wal/colors-waybar.css"; */
+          @import "/home/${self.user}/.config/waybar/colors.css";
+
           * {
               /* `otf-font-awesome` is required to be installed for icons */
               font-family: ${self.font.propo}, JetBrainsMonoNerdFontPropo;
@@ -105,7 +112,7 @@
 
           window#waybar {
               background-color: @background;
-              color: @cursor;
+              color: @on_surface;
           }
 
           button {
@@ -119,22 +126,23 @@
           }
 
           #workspaces button {
-              padding: 0 5px;
+              /* padding: 5 0; */
+              padding: 0 5;
               background-color: transparent;
           }
 
           #workspaces button:hover {
-              background: @color1;
+              background: @primary_container;
           }
 
           #workspaces button.focused, #workspaces button.active {
-              background-color: @color8;
+              background-color: @source_color;
               color: @background;
               /* box-shadow: inset 0 -3px @color3; */
           }
 
           #workspaces button.urgent {
-              background-color: @color4;
+              background-color: @secondary;
           }
 
           #language,
@@ -148,7 +156,8 @@
           #custom-power {
               margin: 2 2;
               padding: 0 10;
-              color: @cursor;
+              /* padding: 10 0; */
+              color: @on_surface;
               border-radius: ${self.border.small};
           }
 
@@ -157,37 +166,42 @@
           #wireplumber,
           #custom-power,
           #network {
-              background-color: @color4;
+              background-color: @primary_container;
               color: @background;
           }
 
           /* top right bottom left */
           #battery {
               padding: 0 5 0 10;
+              /* padding: 5 0 10 0; */
               border-radius: ${self.border.small} 0 0 ${self.border.small};
               margin: 2 0 2 2;
+              /* margin: 2 2 0 2; */
           }
 
           #battery.bat2 {
               padding: 0 10 0 5;
+              /* padding: 10 0 5 0; */
               border-radius: 0 ${self.border.small} ${self.border.small} 0;
               margin: 2 2 2 0;
+              /* margin: 0 2 2 2; */
           }
 
           #custom-power {
-              background-color: @color8;
+              background-color: @source_color;
           }
 
           #bluetooth:hover,
           #wireplumber:hover,
           #network:hover,
           #custom-power:hover {
-              background-color: @color3;
+              background-color: @on_primary_container;
           }
 
           #window,
           #workspaces {
-              margin: 0 4px;
+              margin: 0 4;
+              /* margin: 4 0; */
           }
 
           /* If workspaces is the leftmost module, omit left margin */

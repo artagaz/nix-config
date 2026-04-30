@@ -9,7 +9,7 @@
     
     nixpkgs.overlays = [ inputs.niri-flake.overlays.niri ];
 
-    kitty.pywal.enable = true;
+    kitty.wal.enable = true;
 
     programs.niri = {
       enable = true;
@@ -47,6 +47,7 @@
       mpv
       nautilus
       pywal
+      python314Packages.haishoku
       swaybg
       waybar
       wl-clipboard
@@ -54,8 +55,7 @@
       xwayland-satellite
     ];
 
-    home-manager.users.${self.user}.imports = [
-    {
+    home-manager.users.${self.user} = { config, ... }: {
       home.activation = {
         pywal = ''
           ${pkgs.pywal}/bin/wal --cols16 -i ${self.wallpaper}
@@ -179,7 +179,6 @@
           };
         };
       };
-    }
-    ];
+    };
   };
 }

@@ -1,6 +1,6 @@
 { self, ... }:
 let
-  wallpaper = "/home/${self.user}/Pictures/da-man.png";
+  wallpaper = "/home/${self.user}/Pictures/nevzeo.jpg";
 
   font = {
     mono = "JetBrainsMonoNerdFontMono";
@@ -10,8 +10,8 @@ let
   };
 
   border = {
-    main = "0";
-    small = "0";
+    main = "12";
+    small = "8";
   };
 in {
   flake = {
