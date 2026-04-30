@@ -14,9 +14,7 @@
           }
         ];
         extraConfig = ''
-          unbind -a -T root
           bind -n M-r source-file ~/.config/tmux/tmux.conf \; display "Config reloaded"
-
           bind -n M-s choose-session
 
           bind -n M-1 select-window -t 1
