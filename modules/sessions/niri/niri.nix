@@ -43,22 +43,18 @@
       eog
       gnome-themes-extra
       kdePackages.breeze
+      kdePackages.breeze-icons
       kdePackages.dolphin
       kdePackages.kcalc
       mpv
       nautilus
       pywal
       wl-clipboard
-      wlsunset
       xwayland-satellite
     ];
 
     home-manager.users.${self.user} = { config, ... }: {
-      home.activation = {
-        pywal = ''
-          ${pkgs.pywal}/bin/wal --cols16 -i ${self.wallpaper}
-        '';
-      };
+      # home.activation.pywal = "${pkgs.pywal}/bin/wal --cols16 -i ${self.wallpaper}";
 
       programs.rofi = {
         enable = true;
@@ -74,16 +70,6 @@
           kb-remove-char-back = "BackSpace";
         };
         theme = "~/.cache/wal/colors-rofi-dark.rasi";
-      };
-
-      services.dunst = {
-        enable = true;
-        settings = {
-          global = {
-            font = "${self.font.mono} 13";
-            corner_radius = self.border.small;
-          };
-        };
       };
 
       services.polkit-gnome.enable = true; # Enable Gnome polkit.

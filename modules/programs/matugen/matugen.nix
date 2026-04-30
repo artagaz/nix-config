@@ -8,11 +8,7 @@
 
     home-manager.users.${self.user}.imports = [
     {
-      home.activation = {
-        matugen = ''
-          ${pkgs.matugen}/bin/matugen image ${self.wallpaper} --source-color-index 0
-        '';
-      };
+      # home.activation.matugen = "${pkgs.matugen}/bin/matugen image ${self.wallpaper} --source-color-index 0";
       
       home.packages = with pkgs; [ 
         matugen
@@ -53,11 +49,6 @@
             [templates.waybar]
             input_path = '${builtins.toString ./templates/colors.css}'
             output_path = '~/.config/waybar/colors.css'
-
-            [templates.dunst]
-            input_path = '${builtins.toString ./templates/dunstrc-colors}'
-            output_path = '~/.config/dunst/dunstrc.d/00-style.conf'
-            # post_hook = 'dunstctl reload'
           '';
         };
 

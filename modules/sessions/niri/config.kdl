@@ -113,11 +113,11 @@ output "eDP-1" {
     // position x=1280 y=0
 }
 
-overview {
-    workspace-shadow {
-        off
-    }
-}
+// overview {
+//     workspace-shadow {
+//         off
+//     }
+// }
 
 // Settings that influence how windows are positioned and sized.
 // Find more information on the wiki:
@@ -288,8 +288,6 @@ layout {
 // This line starts waybar, a commonly used bar for Wayland compositors.
 // spawn-at-startup "waybar" // Bar.
 spawn-at-startup "noctalia-shell" // Shell.
-spawn-at-startup "dunst" // Notification daemon.
-spawn-sh-at-startup "wlsunset -l 43.2 -L 76.9 -t 5000" // Night light utility.
 
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
@@ -334,9 +332,14 @@ animations {
 //     xcursor-size 24
 // }
 
+// layer-rule {
+//     match namespace="^wallpaper$"
+//     place-within-backdrop true
+// }
+
 layer-rule {
-    match namespace="^wallpaper$"
-    place-within-backdrop true
+  match namespace="^noctalia-overview*"
+  place-within-backdrop true
 }
 
 // Window rules let you adjust behavior for individual windows.
@@ -345,12 +348,19 @@ layer-rule {
 
 // Example: enable rounded corners for all windows.
 window-rule {
-    // geometry-corner-radius 0
     clip-to-geometry true
-    // opacity 0.9
+    /* Apps: blur them all without xray for a better look */
     background-effect {
-        blur true
+      blur true
     }
+}
+
+/* Noctalia: blur everywhere without xray for a better look */
+layer-rule {
+  match namespace="^noctalia-(background|launcher-overlay|dock)-.*$"
+  background-effect {
+    xray false
+  }
 }
 
 // Work around WezTerm's initial configure bug
@@ -406,7 +416,8 @@ binds {
     Mod+Shift+T hotkey-overlay-title=null { spawn-sh "Telegram"; }
     Mod+Shift+C hotkey-overlay-title=null { spawn "kitty"; }
     Mod+E hotkey-overlay-title=null { spawn "nautilus"; }
-    Mod+P hotkey-overlay-title=null { spawn-sh "noctalia-shell ipc call launcher toggle"; }
+    Mod+P { spawn-sh "noctalia-shell ipc call launcher toggle"; }
+    Mod+S { spawn-sh "noctalia-shell ipc call settings toggle"; }
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument. It's passed verbatim to `sh -c`.

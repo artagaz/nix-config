@@ -1,12 +1,16 @@
 { self, inputs, ... }:
 {
-  flake.nixosModules.noctalia = {
+  flake.nixosModules.noctalia = { pkgs, ... }: {
     services.upower.enable = true;
 
     home-manager.users.${self.user} = {
       imports = [
         inputs.noctalia.homeModules.default
       ];
+
+      home.sessionVariables = {
+        QS_ICON_THEME = "breeze-dark";
+      };
 
       programs.noctalia-shell = {
         enable = true;
@@ -25,8 +29,8 @@
             contentPadding = 2;
             fontScale = 1;
             enableExclusionZoneInset = true;
-            backgroundOpacity = 0.5;
-            useSeparateOpacity = true;
+            backgroundOpacity = 1;
+            useSeparateOpacity = false;
             marginVertical = 4;
             marginHorizontal = 4;
             frameThickness = 8;
@@ -214,7 +218,7 @@
             showHibernateOnLockScreen = false;
             enableLockScreenMediaControls = false;
             enableShadows = false;
-            enableBlurBehind = true;
+            enableBlurBehind = false;
             shadowDirection = "bottom_right";
             shadowOffsetX = 2;
             shadowOffsetY = 3;
@@ -309,7 +313,7 @@
           };
           wallpaper = {
             enabled = true;
-            overviewEnabled = false;
+            overviewEnabled = true;
             directory = "/home/matthew/Pictures";
             monitorDirectories = [];
             enableMultiMonitorDirectories = false;
@@ -355,7 +359,7 @@
             favorites = [];
           };
           appLauncher = {
-            enableClipboardHistory = false;
+            enableClipboardHistory = true;
             autoPasteClipboard = false;
             enableClipPreview = true;
             clipboardWrapText = true;
@@ -585,9 +589,9 @@
             overlayLayer = true;
             backgroundOpacity = 1;
             respectExpireTimeout = false;
-            lowUrgencyDuration = 3;
-            normalUrgencyDuration = 8;
-            criticalUrgencyDuration = 15;
+            lowUrgencyDuration = 2;
+            normalUrgencyDuration = 3;
+            criticalUrgencyDuration = 5;
             clearDismissed = true;
             saveToHistory = {
               low = true;
@@ -638,7 +642,7 @@
             backlightDeviceMappings = [];
           };
           colorSchemes = {
-            useWallpaperColors = false;
+            useWallpaperColors = true;
             predefinedScheme = "Gruvbox";
             darkMode = true;
             schedulingMode = "off";
@@ -653,17 +657,17 @@
             enableUserTheming = false;
           };
           nightLight = {
-            enabled = false;
+            enabled = true;
             forced = false;
             autoSchedule = true;
-            nightTemp = "4000";
+            nightTemp = "5000";
             dayTemp = "6500";
             manualSunrise = "06:30";
             manualSunset = "18:30";
           };
           hooks = {
-            enabled = false;
-            wallpaperChange = "";
+            enabled = true;
+            wallpaperChange = "wal --cols16 -i $1 & matugen image $1 --source-color-index 0";
             darkModeChange = "";
             screenLock = "";
             screenUnlock = "";
