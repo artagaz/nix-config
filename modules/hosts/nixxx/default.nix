@@ -1,7 +1,9 @@
 /* ┌──────────────────────────────────────────┐
-   │       это хз зачем модули какие-то       │
+   │                где модули                │
    └──────────────────────────────────────────┘ */
-{ inputs, ...}: {
-  imports = [ inputs.flake-parts.flakeModules.modules ];
-  systems = [ "x86_64-linux" ];
+{ inputs, self, ... }:
+{
+  flake.nixosConfigurations.nixos = inputs.nixpkgs.lib.nixosSystem {
+    modules = [ self.nixosModules.nixxx ];
+  };
 }

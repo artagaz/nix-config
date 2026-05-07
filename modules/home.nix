@@ -1,3 +1,6 @@
+/* ┌──────────────────────────────────────────┐
+   │     home manager для программок типо     │
+   └──────────────────────────────────────────┘ */
 { inputs, self, ... }:
 {
   flake.nixosModules.home-manager = {
@@ -11,6 +14,9 @@
       extraSpecialArgs = { inherit inputs self; };
       backupCommand = "rm";
 
+/* ┌──────────────────────────────────────────┐
+   │        обьявляется пользователь          │
+   └──────────────────────────────────────────┘ */
       users.${self.user} = {
         home.stateVersion = "26.05";
         programs.home-manager.enable = true;

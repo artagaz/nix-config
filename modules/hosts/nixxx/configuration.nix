@@ -1,38 +1,33 @@
+/* ┌──────────────────────────────────────────┐
+   │             системный конфиг             │
+   └──────────────────────────────────────────┘ */
 { self, ... }:
 {
-  flake.nixosModules.laptop = { pkgs, ... }: {
+  flake.nixosModules.nixxx = { pkgs, ... }: {
 
-    # Import NixOS modules.
+/* ┌──────────────────────────────────────────┐
+   │      импорт модулей  с програмками       │
+   └──────────────────────────────────────────┘ */
     imports = [
-      self.nixosModules.laptopHardware
+      self.nixosModules.nixxxHardware
 
+      # тут программки
       self.nixosModules.base
       
+      # тут описанные через flakes
       self.nixosModules.fastfetch
       self.nixosModules.home-manager
+      self.nixosModules.vscode 
 
-      #self.nixosModules.cinnamon
+      # тут графические окружения
       self.nixosModules.niri
       self.nixosModules.xfcerdp
-      self.nixosModules.vscode
     ];
 
-    # Use the systemd-boot EFI boot loader.
-#    boot.loader.systemd-boot.enable = true;
- #   boot.loader.efi.canTouchEfiVariables = true;
-  #  boot.loader.timeout = 1;
 
-    # Use the GRUB EFI boot loader.
-    # boot.loader = {
-    #   grub = {
-    #     enable = true;
-    #     device = "nodev"; # "nodev" is used for UEFI
-    #     efiSupport = true;
-    #     useOSProber = true;
-    #   };
-    #   efi.canTouchEfiVariables = true;
-    # };
-
+/* ┌──────────────────────────────────────────┐                                                                                                                                                                                 
+   │                 GRUB                     │                                                                                                                                                                                 
+   └──────────────────────────────────────────┘ */
     boot.loader.grub.enable = true;
     boot.loader.grub.device = "/dev/sda";
     boot.loader.grub.useOSProber = true;

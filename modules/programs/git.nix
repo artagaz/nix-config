@@ -7,8 +7,8 @@
         enable = true;
         settings = {
           user = {
-            name = "Senior Matt";
-            email = "matthew.prakhov@gmail.com";
+            name = "andre";
+            email = "vaylinnnn6@gmail.com";
           };
           core = {
             editor = "nvim";
