@@ -25,7 +25,7 @@
           };
           extraConfig = lib.mkIf config.kitty.wal.enable ''
             include ~/.cache/wal/colors-kitty.conf
-            background_opacity 0.85
+            background_opacity 0.8
           '';
           themeFile = lib.mkIf (!config.kitty.wal.enable) "Catppuccin-Mocha";
         };

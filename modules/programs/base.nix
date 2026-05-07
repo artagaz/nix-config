@@ -3,8 +3,7 @@
   flake.nixosModules.base = { pkgs, ... }: {
     imports = [
       self.nixosModules.kitty
-      self.nixosModules.vpn
-      self.nixosModules.zen-browser
+      self.nixosModules.git
     ];
 
     # List packages installed in system profile.
@@ -16,8 +15,13 @@
       obsidian
       telegram-desktop
       vesktop
+      mc
+      btop
+      htop
+      firefox
+      
     ];
-
+    
     # List font packages installed in system profile.
     fonts.packages = with pkgs; [
       ibm-plex
@@ -26,6 +30,6 @@
   };
 
   flake = {
-    user = "matthew";
+    user = "andrei";
   };
 }

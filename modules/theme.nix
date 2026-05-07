@@ -1,6 +1,6 @@
 { self, ... }:
 let
-  wallpaper = "/home/${self.user}/Pictures/nevzeo.jpg";
+  wallpaper = "/home/${self.user}/Pictures/romashki.jpg";
 
   font = {
     mono = "JetBrainsMonoNerdFontMono";

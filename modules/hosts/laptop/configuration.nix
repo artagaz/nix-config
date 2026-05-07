@@ -1,7 +1,3 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
-
 { self, ... }:
 {
   flake.nixosModules.laptop = { pkgs, ... }: {
@@ -11,21 +7,20 @@
       self.nixosModules.laptopHardware
 
       self.nixosModules.base
-      self.nixosModules.gamedev
-      self.nixosModules.gaming
-
+      
       self.nixosModules.fastfetch
       self.nixosModules.home-manager
 
-      # self.nixosModules.cinnamon
+      #self.nixosModules.cinnamon
       self.nixosModules.niri
-      # self.nixosModules.plasma
+      self.nixosModules.xfcerdp
+      self.nixosModules.vscode
     ];
 
     # Use the systemd-boot EFI boot loader.
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
-    boot.loader.timeout = 1;
+#    boot.loader.systemd-boot.enable = true;
+ #   boot.loader.efi.canTouchEfiVariables = true;
+  #  boot.loader.timeout = 1;
 
     # Use the GRUB EFI boot loader.
     # boot.loader = {
@@ -37,6 +32,11 @@
     #   };
     #   efi.canTouchEfiVariables = true;
     # };
+
+    boot.loader.grub.enable = true;
+    boot.loader.grub.device = "/dev/sda";
+    boot.loader.grub.useOSProber = true;
+
 
     # Enable flakes.
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -57,10 +57,7 @@
     networking.networkmanager.enable = true;
 
     # Set your time zone.
-    time.timeZone = "Asia/Almaty";
-
-    # Select internationalisation properties.
-    i18n.defaultLocale = "en_US.UTF-8";
+    time.timeZone = "Asia/Krasnoyarsk";
 
     # Enable CUPS to print documents.
     services.printing.enable = true;
@@ -73,6 +70,22 @@
       enable = true;
       pulse.enable = true;
     };
+
+# Локализация
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "ru_RU.UTF-8";
+    LC_IDENTIFICATION = "ru_RU.UTF-8";
+    LC_MEASUREMENT = "ru_RU.UTF-8";
+    LC_MONETARY = "ru_RU.UTF-8";
+    LC_NAME = "ru_RU.UTF-8";
+    LC_NUMERIC = "ru_RU.UTF-8";
+    LC_PAPER = "ru_RU.UTF-8";
+    LC_TELEPHONE = "ru_RU.UTF-8";
+    LC_TIME = "ru_RU.UTF-8";
+  };
+
+
 
     # Enable TLP.
     services.tlp = {
@@ -96,22 +109,6 @@
     # Allow unfree packages.
     nixpkgs.config.allowUnfree = true;
 
-    fileSystems = {
-      "/".options = [ "compress=zstd" ];
-      "/home".options = [ "compress=zstd" ];
-      "/nix".options = [ "compress=zstd" "noatime" ];
-    };
-
-    # Mount /dev/nvme0n1p5 data partition.
-    fileSystems."/mnt/data" = {
-      device = "/dev/disk/by-uuid/a7614c0a-f5ee-4eab-a431-853affce8a34";
-      fsType = "btrfs";
-      options = [
-        "users"
-        "nofail"
-        "exec"
-      ];
-    };
 
     system.stateVersion = "25.11"; # Did you read the comment?
   };

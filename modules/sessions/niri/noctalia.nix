@@ -200,7 +200,7 @@
             screenOverrides = [];
           };
           general = {
-            avatarImage = "/home/matthew/.face";
+            avatarImage = "/home/andrei/.face";
             dimmerOpacity = 0.2;
             showScreenCorners = false;
             forceBlackScreenCorners = false;
@@ -314,7 +314,7 @@
           wallpaper = {
             enabled = true;
             overviewEnabled = true;
-            directory = "/home/matthew/Pictures";
+            directory = "/home/andrei/Pictures";
             monitorDirectories = [];
             enableMultiMonitorDirectories = false;
             showHiddenFiles = false;
