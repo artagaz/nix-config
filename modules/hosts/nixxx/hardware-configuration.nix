@@ -1,26 +1,25 @@
 /* ┌───────────────────────────────────────────────────┐
    │системные настройки через команду надо взять конфиг│         
    └───────────────────────────────────────────────────┘ */
+# nixos-generate-config --show-hardware-config
+
 { self, ... }:
 {
   flake.nixosModules.nixxxHardware = { config, lib, pkgs, modulesPath, ... }: {
     imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
+    # какие модули ядра будут загружены
     boot.initrd.availableKernelModules = [ "ata_piix" "mptspi" "uhci_hcd" "ehci_pci" "ahci" "sd_mod" "sr_mod" ];
     boot.initrd.kernelModules = [ ];
     boot.kernelModules = [ ];
     boot.extraModulePackages = [ ];
 
-/* ┌──────────────────────────────────────────┐
-   │                 VMware                   │
-   └──────────────────────────────────────────┘ */
+    # модули для вмваре
     services.xserver.videoDrivers = [ "vmware" ];
     virtualisation.vmware.guest.enable = true;
     hardware.graphics.enable = true;
 
-/* ┌──────────────────────────────────────────┐
-   │               диски                      │
-   └──────────────────────────────────────────┘ */
+    # диски
     fileSystems."/" = {
       device = "/dev/disk/by-uuid/d0270880-39ef-4ae8-8701-87606a0d4578";
       fsType = "ext4";

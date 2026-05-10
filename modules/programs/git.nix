@@ -1,8 +1,7 @@
-{ self, ... }:
-{
+# настройки гита
+{ self, ... }: {
   flake.nixosModules.git = {
-    home-manager.users.${self.user}.imports = [
-    {
+    home-manager.users.${self.user}.imports = [{
       programs.git = {
         enable = true;
         settings = {
@@ -10,12 +9,8 @@
             name = "andre";
             email = "vaylinnnn6@gmail.com";
           };
-          core = {
-            editor = "nvim";
-          };
         };
       };
-    }
-    ];
+    }];
   };
 }

@@ -1,72 +1,47 @@
-/* ┌──────────────────────────────────────────┐
-   │             системный конфиг             │
-   └──────────────────────────────────────────┘ */
+# сам конфиг ---------------------------------------------------------------------------------
 { self, ... }:
-{
-  flake.nixosModules.nixxx = { pkgs, ... }: {
+{flake.nixosModules.nixxx = { pkgs, ... }: {
 
-/* ┌──────────────────────────────────────────┐
-   │      импорт модулей  с програмками       │
-   └──────────────────────────────────────────┘ */
-    imports = [
+  # пользовательский аккаунт
+  users.users.${self.user} = {
+    # группы пользователя
+    extraGroups = [ "wheel" ];
+    isNormalUser = true;
+      
+    # личные пакеты пользователя
+    packages = with pkgs; [
+      tree
+    ];
+  };
+
+  # подключение модулей
+  imports = [
+      # железо
       self.nixosModules.nixxxHardware
 
-      # тут программки
+      # тут простые программки
       self.nixosModules.base
       
-      # тут описанные через flakes
+      # тут програмки описанные через flakes
       self.nixosModules.fastfetch
       self.nixosModules.home-manager
-      self.nixosModules.vscode 
+      #self.nixosModules.vscode 
 
       # тут графические окружения
       self.nixosModules.niri
       self.nixosModules.xfcerdp
-    ];
+  ];
 
+  # разрешить несвободное ПО
+  nixpkgs.config.allowUnfree = true;
 
-/* ┌──────────────────────────────────────────┐                                                                                                                                                                                 
-   │                 GRUB                     │                                                                                                                                                                                 
-   └──────────────────────────────────────────┘ */
-    boot.loader.grub.enable = true;
-    boot.loader.grub.device = "/dev/sda";
-    boot.loader.grub.useOSProber = true;
+  # hostname
+  networking.hostName = "nixos";
 
+  # timezone
+  time.timeZone = "Asia/Krasnoyarsk";
 
-    # Enable flakes.
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-    # Enable store optimization on every rebuild.
-    nix.settings.auto-optimise-store = true;
-
-    # Enable automatic garbace collection.
-    nix.gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 7d";
-    };
-
-    networking.hostName = "nixos"; # Define your hostname.
-
-    # Configure network connections interactively with nmcli or nmtui.
-    networking.networkmanager.enable = true;
-
-    # Set your time zone.
-    time.timeZone = "Asia/Krasnoyarsk";
-
-    # Enable CUPS to print documents.
-    services.printing.enable = true;
-
-    # Enable bluetooth.
-    hardware.bluetooth.enable = true;
-
-    # Enable sound.
-    services.pipewire = {
-      enable = true;
-      pulse.enable = true;
-    };
-
-# Локализация
+  # языки                                                                              
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "ru_RU.UTF-8";
@@ -80,32 +55,51 @@
     LC_TIME = "ru_RU.UTF-8";
   };
 
+  # загрузчик
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/sda";
+  boot.loader.grub.useOSProber = true;
 
+  # системные хуйнюшки ---------------------------------------------------------------------------------
+  # Enable flakes.
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-    # Enable TLP.
-    services.tlp = {
-      enable = true;
-      settings = {
-        # Improve performance on battery.
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_performance";
-        PLATFORM_PROFILE_ON_BAT = "performance";
-      };
-    };
+  # Enable store optimization on every rebuild.
+  nix.settings.auto-optimise-store = true;
 
-    # Define a user account. Don't forget to set a password with ‘passwd’.
-    users.users.${self.user} = {
-      isNormalUser = true;
-      extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-      packages = with pkgs; [
-        tree
-      ];
-    };
-  
-    # Allow unfree packages.
-    nixpkgs.config.allowUnfree = true;
-
-
-    system.stateVersion = "25.11"; # Did you read the comment?
+  # Enable automatic garbace collection.
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 7d";
   };
-}
+
+  # Configure network connections interactively with nmcli or nmtui.
+  networking.networkmanager.enable = true;
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
+  # Enable bluetooth.
+  hardware.bluetooth.enable = true;
+
+  # Enable sound.
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+  };
+
+  # для ноутбуков
+  # Enable TLP.
+  /*services.tlp = {
+    enable = true;
+    settings = {
+      # Improve performance on battery.
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_performance";
+      PLATFORM_PROFILE_ON_BAT = "performance";
+    };
+  };*/
+
+  system.stateVersion = "25.11"; # Did you read the comment?
+};}
 

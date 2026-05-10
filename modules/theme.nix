@@ -1,8 +1,3 @@
-/* ┌──────────────────────────────────────────┐
-   │          темы шрифты обои и тд           │
-   └──────────────────────────────────────────┘ */
-
-
 { self, ... }:
 let
   wallpaper = "/home/${self.user}/Pictures/romashki.jpg";
@@ -10,8 +5,6 @@ let
   font = {
     mono = "JetBrainsMonoNerdFontMono";
     propo = "JetBrainsMonoNerdFontPropo";
-    # mono = "IBM Plex Mono";
-    # propo = "IBM Plex Mono";
   };
 
   border = {

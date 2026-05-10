@@ -71,10 +71,10 @@
                   showCpuFreq = false;
                   showCpuTemp = true;
                   showCpuUsage = true;
-                  showDiskAvailable = false;
-                  showDiskUsage = false;
-                  showDiskUsageAsPercent = false;
-                  showGpuTemp = false;
+                  showDiskAvailable = true;
+                  showDiskUsage = true;
+                  showDiskUsageAsPercent = true;
+                  showGpuTemp = true;
                   showLoadAverage = false;
                   showMemoryAsPercent = false;
                   showMemoryUsage = true;
@@ -587,7 +587,7 @@
             monitors = [];
             location = "top_right";
             overlayLayer = true;
-            backgroundOpacity = 1;
+            backgroundOpacity = 0.75;
             respectExpireTimeout = false;
             lowUrgencyDuration = 2;
             normalUrgencyDuration = 3;
@@ -657,7 +657,7 @@
             enableUserTheming = false;
           };
           nightLight = {
-            enabled = true;
+            enabled = false;
             forced = false;
             autoSchedule = true;
             nightTemp = "5000";

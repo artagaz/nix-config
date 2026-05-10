@@ -2,27 +2,27 @@
 {
   flake.nixosModules.base = { pkgs, ... }: {
     imports = [
+      # простые конфиги для программ тут
       self.nixosModules.kitty
       self.nixosModules.git
+      self.nixosModules.bash
+      self.nixosModules.vscode
     ];
 
-    # List packages installed in system profile.
+    # программы для всей системы
     environment.systemPackages = with pkgs; [
       gnome-clocks
       kdePackages.okular
       kdePackages.partitionmanager
-      krita
-      obsidian
       telegram-desktop
       vesktop
       mc
       btop
       htop
-      firefox
-      
+      firefox      
     ];
     
-    # List font packages installed in system profile.
+    # шрифты
     fonts.packages = with pkgs; [
       ibm-plex
       nerd-fonts.jetbrains-mono

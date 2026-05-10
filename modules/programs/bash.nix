@@ -1,3 +1,4 @@
+# тут алиасы для шелла всякие
 { self, ... }:
 {
   flake.nixosModules.bash = {
@@ -12,6 +13,7 @@
             nrb = "sudo nixos-rebuild boot --flake .#nixos";
             nrs = "sudo nixos-rebuild switch --flake .#nixos";
             nrt = "sudo nixos-rebuild test --flake .#nixos";
+            pls = "sudo";
           };
         };
       }

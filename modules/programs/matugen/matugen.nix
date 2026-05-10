@@ -1,5 +1,4 @@
-{ self, ... }:
-{
+{ self, ... }: {
   flake.nixosModules.matugen = { pkgs, lib, ... }:
   {
     imports = [
@@ -7,9 +6,7 @@
     ];
 
     home-manager.users.${self.user}.imports = [
-    {
-      # home.activation.matugen = "${pkgs.matugen}/bin/matugen image ${self.wallpaper} --source-color-index 0";
-      
+    {    
       home.packages = with pkgs; [ 
         matugen
         kdePackages.breeze
