@@ -4,30 +4,35 @@
     home-manager.users.${self.user} = {
       programs.vscode = {
         enable = true;
-        # Можно выбрать обычный vscode или vscodium (без телеметрии)
         package = pkgs.vscode;
 
         profiles.default = {
-          # Твои расширения (ищи названия на search.nixos.org)
+          # расширения
           extensions = with pkgs.vscode-extensions; [
             bbenoist.nix           # Подсветка Nix
             jnoortheen.nix-ide     # LSP для Nix
-            ms-ceintl.vscode-language-pack-ru # Русский язык
-            christian-kohler.path-intellisense
+            christian-kohler.path-intellisenseв
+            oracle.sql-developer  # sql
+            ms-python.python
           ];
 
-          # Твои настройки (settings.json) прямо здесь
+          # настройки 
           userSettings = {
             "editor.fontSize" = 14;
             "editor.fontFamily" = "'JetBrainsMono Nerd Font', 'monospace'";
-            "workbench.colorTheme" = "Gruvbox Dark Hard"; # Или какая тебе нравится
+            "workbench.colorTheme" = "Gruvbox Dark Hard";
             "editor.formatOnSave" = true;
-            "window.titleBarStyle" = "custom"; # Важно для Niri/Wayland
+            "window.titleBarStyle" = "custom";
             "nix.enableLanguageServer" = true;
-            "nix.serverPath" = "nixd"; # Или nil
+            "nix.serverPath" = "${pkgs.nixd}/bin/nixd";
+            "nix.serverSettings" = {
+              "nixd" = {
+                "formatting" = { "command" = [ "${pkgs.nixfmt-rfc-style}/bin/nixfmt" ]; };
+              };
+            };
           };
 
-          # Твои горячие клавиши (keybindings.json)
+          # бинды
           keybindings = [
             {
               key = "ctrl+s";
