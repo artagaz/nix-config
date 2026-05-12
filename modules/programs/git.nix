@@ -1,16 +1,19 @@
 # настройки гита
-{ self, ... }: {
+{ self, ... }:
+{
   flake.nixosModules.git = {
-    home-manager.users.${self.user}.imports = [{
-      programs.git = {
-        enable = true;
-        settings = {
-          user = {
-            name = "andre";
-            email = "vaylinnnn6@gmail.com";
+    home-manager.users.${self.user}.imports = [
+      {
+        programs.git = {
+          enable = true;
+          settings = {
+            user = {
+              name = "${self.user}";
+              email = "${self.mail}";
+            };
           };
         };
-      };
-    }];
+      }
+    ];
   };
 }

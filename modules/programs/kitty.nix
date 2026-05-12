@@ -1,36 +1,30 @@
 { self, ... }:
 {
-  flake.nixosModules.kitty = { config, lib, ... }: {
-    options = {
-      kitty.wal = {
-        enable = lib.mkOption {
-          default = false;
-          type = lib.types.bool;
-        };
+  flake.nixosModules.kitty =
+    { ... }:
+    {
+      config = {
+        home-manager.users.${self.user}.imports = [
+          {
+            programs.kitty = {
+              enable = true;
+              font = {
+                name = "${self.font.mono}";
+                size = 13;
+              };
+
+              settings = {
+                confirm_os_window_close = 0;
+                remember_window_size = "no";
+              };
+
+              extraConfig = ''
+                include ~/.cache/wal/colors-kitty.conf
+                background_opacity 0.8
+              '';
+            };
+          }
+        ];
       };
     };
-
-    config = {
-      home-manager.users.${self.user}.imports = [
-      {
-        programs.kitty = {
-          enable = true;
-          font = {
-            name = "${self.font.mono}";
-            size = 13;
-          };
-          settings = {
-            confirm_os_window_close = 0;
-            remember_window_size = "no";
-          };
-          extraConfig = lib.mkIf config.kitty.wal.enable ''
-            include ~/.cache/wal/colors-kitty.conf
-            background_opacity 0.8
-          '';
-          themeFile = lib.mkIf (!config.kitty.wal.enable) "Catppuccin-Mocha";
-        };
-      }
-      ];
-    };
-  };
 }

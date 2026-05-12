@@ -1,105 +1,94 @@
 # сам конфиг ---------------------------------------------------------------------------------
 { self, ... }:
-{flake.nixosModules.nixxx = { pkgs, ... }: {
+{
+  flake.nixosModules.nixxx =
+    { pkgs, ... }:
+    {
+      # пользовательский аккаунт
+      users.users.${self.user} = {
+        # группы пользователя
+        extraGroups = [ "wheel" ];
+        isNormalUser = true;
 
-  # пользовательский аккаунт
-  users.users.${self.user} = {
-    # группы пользователя
-    extraGroups = [ "wheel" ];
-    isNormalUser = true;
-      
-    # личные пакеты пользователя
-    packages = with pkgs; [
-      tree
-    ];
-  };
+        # личные пакеты пользователя
+        packages = with pkgs; [
+          tree
+        ];
+      };
 
-  # подключение модулей
-  imports = [
-      # железо
-      self.nixosModules.nixxxHardware
+      # разрешить несвободное ПО
+      nixpkgs.config.allowUnfree = true;
 
-      # тут простые программки
-      self.nixosModules.base
-      
-      # тут програмки описанные через flakes
-      self.nixosModules.fastfetch
-      self.nixosModules.home-manager
-      #self.nixosModules.vscode 
+      # hostname
+      networking.hostName = "${self.hostname}";
 
-      # тут графические окружения
-      self.nixosModules.niri
-      self.nixosModules.xfcerdp
-  ];
+      # timezone
+      time.timeZone = "Asia/Krasnoyarsk";
 
-  # разрешить несвободное ПО
-  nixpkgs.config.allowUnfree = true;
+      # языки
+      i18n.defaultLocale = "en_US.UTF-8";
+      i18n.extraLocaleSettings = {
+        LC_ADDRESS = "ru_RU.UTF-8";
+        LC_IDENTIFICATION = "ru_RU.UTF-8";
+        LC_MEASUREMENT = "ru_RU.UTF-8";
+        LC_MONETARY = "ru_RU.UTF-8";
+        LC_NAME = "ru_RU.UTF-8";
+        LC_NUMERIC = "ru_RU.UTF-8";
+        LC_PAPER = "ru_RU.UTF-8";
+        LC_TELEPHONE = "ru_RU.UTF-8";
+        LC_TIME = "ru_RU.UTF-8";
+      };
 
-  # hostname
-  networking.hostName = "nixos";
+      # загрузчик
+      boot.loader.grub.enable = true;
+      boot.loader.grub.device = "/dev/sda";
+      boot.loader.grub.useOSProber = true;
 
-  # timezone
-  time.timeZone = "Asia/Krasnoyarsk";
+      # системные хуйнюшки ---------------------------------------------------------------------------------
+      # Enable flakes.
+      nix.settings.experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
 
-  # языки                                                                              
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "ru_RU.UTF-8";
-    LC_IDENTIFICATION = "ru_RU.UTF-8";
-    LC_MEASUREMENT = "ru_RU.UTF-8";
-    LC_MONETARY = "ru_RU.UTF-8";
-    LC_NAME = "ru_RU.UTF-8";
-    LC_NUMERIC = "ru_RU.UTF-8";
-    LC_PAPER = "ru_RU.UTF-8";
-    LC_TELEPHONE = "ru_RU.UTF-8";
-    LC_TIME = "ru_RU.UTF-8";
-  };
+      # Enable store optimization on every rebuild.
+      nix.settings.auto-optimise-store = true;
 
-  # загрузчик
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/sda";
-  boot.loader.grub.useOSProber = true;
+      # Enable automatic garbace collection.
+      nix.gc = {
+        automatic = true;
+        dates = "weekly";
+        options = "--delete-older-than 7d";
+      };
 
-  # системные хуйнюшки ---------------------------------------------------------------------------------
-  # Enable flakes.
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+      # Configure network connections interactively with nmcli or nmtui.
+      networking.networkmanager.enable = true;
 
-  # Enable store optimization on every rebuild.
-  nix.settings.auto-optimise-store = true;
+      # Enable CUPS to print documents.
+      services.printing.enable = true;
 
-  # Enable automatic garbace collection.
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 7d";
-  };
+      # Enable bluetooth.
+      hardware.bluetooth.enable = true;
 
-  # Configure network connections interactively with nmcli or nmtui.
-  networking.networkmanager.enable = true;
+      # Enable sound.
+      services.pipewire = {
+        enable = true;
+        pulse.enable = true;
+      };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+      # для ноутбуков
+      # Enable TLP.
+      /*
+        services.tlp = {
+          enable = true;
+          settings = {
+            # Improve performance on battery.
+            CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_performance";
+            PLATFORM_PROFILE_ON_BAT = "performance";
+          };
+        };
+      */
 
-  # Enable bluetooth.
-  hardware.bluetooth.enable = true;
-
-  # Enable sound.
-  services.pipewire = {
-    enable = true;
-    pulse.enable = true;
-  };
-
-  # для ноутбуков
-  # Enable TLP.
-  /*services.tlp = {
-    enable = true;
-    settings = {
-      # Improve performance on battery.
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "balance_performance";
-      PLATFORM_PROFILE_ON_BAT = "performance";
+      system.stateVersion = "25.11"; # Did you read the comment?
     };
-  };*/
-
-  system.stateVersion = "25.11"; # Did you read the comment?
-};}
-
+}

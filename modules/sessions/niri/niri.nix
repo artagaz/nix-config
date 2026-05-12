@@ -1,145 +1,147 @@
 { self, ... }:
-{flake.nixosModules.niri = { pkgs, lib, config, ... }: {
-  imports = [
-    # управляет цветвми под обои
-    self.nixosModules.matugen
-    # панельки и тд
-    self.nixosModules.noctalia
-  ];
+{
+  flake.nixosModules.niri =
+    {
+      pkgs,
+      ...
+    }:
+    {
+      imports = [
+        # управляет цветами под обои
+        self.nixosModules.matugen
+        # панельки и тд
+        self.nixosModules.noctalia
+      ];
 
-  # включить програмки для этой сессии 
-  kitty.wal.enable = true;
-  programs.niri.enable = true;
+      programs.niri.enable = true;
 
-  # логин-менеджер
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-  };
-
-  # автомонтирование флешек
-  services.udisks2.enable = true;
-  # корзина и тд для проводника
-  services.gvfs.enable = true;
-
-  # пакеты для нири
-  environment.systemPackages = with pkgs; [
-    brightnessctl
-    eog
-    gnome-themes-extra
-    kdePackages.breeze
-    kdePackages.breeze-icons
-    kdePackages.dolphin
-    kdePackages.kcalc
-    mpv
-    nautilus
-    pywal
-    wl-clipboard
-    xwayland-satellite
-  ];
-
-  home-manager.users.${self.user} = { config, ... }: {
-    
-    # лаунчер приложений
-    programs.rofi = {
-      enable = true;
-      font = "${self.font.mono} 18";
-      extraConfig = {
-        kb-row-up = "Up";
-        kb-row-down = "Down";
-        kb-accept-entry = "Control+m,Return,KP_Enter";
-        kb-remove-to-eol = "Control+Shift+e";
-        kb-mode-next = "Shift+Right,Control+Tab,Control+l";
-        kb-mode-previous = "Shift+Left,Control+Shift+Tab,Control+h";
-        kb-mode-complete = "";
-        kb-remove-char-back = "BackSpace";
+      # логин-менеджер
+      services.displayManager.sddm = {
+        enable = true;
+        wayland.enable = true;
       };
-      theme = "~/.cache/wal/colors-rofi-dark.rasi";
-    };
 
-    # всплывающее окно аутентификации
-    services.polkit-gnome.enable = true;
-    systemd.user.services.polkit-gnome = {
-      Service = {
-        Restart = "on-failure";
-        RestartSec = 1;
-      };
-      Unit = {
-        StartLimitIntervalSec = 30;
-        StartLimitBurst = 10;
-      };
-    };
+      # автомонтирование флешек
+      services.udisks2.enable = true;
+      # корзина и тд для проводника
+      services.gvfs.enable = true;
 
-    # привязка конфига нири
-    xdg.configFile."niri/config.kdl".source = ./config.kdl;
+      # пакеты для нири
+      environment.systemPackages = with pkgs; [
+        brightnessctl
+        eog
+        gnome-themes-extra
+        kdePackages.breeze
+        kdePackages.breeze-icons
+        kdePackages.dolphin
+        kdePackages.kcalc
+        mpv
+        nautilus
+        pywal
+        wl-clipboard
+        xwayland-satellite
+      ];
 
-    # Write custom config file.
-    #xdg.configFile."niri/config-nix.kdl".text = /* kdl */ ''
-    #  window-rule {
-    #      geometry-corner-radius ${self.border.main}
-    #  }
-    #'';
+      home-manager.users.${self.user} =
+        { ... }:
+        {
 
-    # приложения по умолчанию
-    xdg.mimeApps = {
-      enable = true;
-      defaultApplications = let
-        imageViewer = "org.gnome.eog.desktop";
-        documentViewer = "org.kde.okular.desktop";
-        videoViewer = "mpv.desktop";
-      in {
-        "image/png" = imageViewer;
-        "image/jpg" = imageViewer;
-        "image/jpeg" = imageViewer;
-        "document/pdf" = documentViewer;
-        "video/mp4" = videoViewer;
-        "video/webm" = videoViewer;
-      };
-    };
+          # лаунчер приложений
+          programs.rofi = {
+            enable = true;
+            font = "${self.font.mono} 18";
+            extraConfig = {
+              kb-row-up = "Up";
+              kb-row-down = "Down";
+              kb-accept-entry = "Control+m,Return,KP_Enter";
+              kb-remove-to-eol = "Control+Shift+e";
+              kb-mode-next = "Shift+Right,Control+Tab,Control+l";
+              kb-mode-previous = "Shift+Left,Control+Shift+Tab,Control+h";
+              kb-mode-complete = "";
+              kb-remove-char-back = "BackSpace";
+            };
+            theme = "~/.cache/wal/colors-rofi-dark.rasi";
+          };
 
-    # Set cursor theme.
-    home.file.".icons/default".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
+          # всплывающее окно аутентификации
+          services.polkit-gnome.enable = true;
+          systemd.user.services.polkit-gnome = {
+            Service = {
+              Restart = "on-failure";
+              RestartSec = 1;
+            };
+            Unit = {
+              StartLimitIntervalSec = 30;
+              StartLimitBurst = 10;
+            };
+          };
 
-    # Set dark theme for GTK programs.
-    dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+          # привязка конфига нири
+          xdg.configFile."niri/config.kdl".source = ./config.kdl;
 
-    # Set GTK theme.
-    gtk = {
-      enable = true;
-      gtk4.theme = null;
-      theme = {
-        name = "adw-gtk3-dark";
-        package = pkgs.adw-gtk3;
-      };
-      cursorTheme = {
-        name = "Bibata-Modern-Classic";
-        package = pkgs.bibata-cursors;
-        size = 20;
-      };
-      font = {
-        name = "${self.font.mono}";
-        size = 13;
-      };
-    };
+          # приложения по умолчанию
+          xdg.mimeApps = {
+            enable = true;
+            defaultApplications =
+              let
+                imageViewer = "org.gnome.eog.desktop";
+                documentViewer = "org.kde.okular.desktop";
+                videoViewer = "mpv.desktop";
+              in
+              {
+                "image/png" = imageViewer;
+                "image/jpg" = imageViewer;
+                "image/jpeg" = imageViewer;
+                "document/pdf" = documentViewer;
+                "video/mp4" = videoViewer;
+                "video/webm" = videoViewer;
+              };
+          };
 
-      # Make QT follow GTK theme.
-    qt = {
-      enable = true;
-      platformTheme.name = "gtk3";
+          # Set cursor theme.
+          home.file.".icons/default".source = "${pkgs.bibata-cursors}/share/icons/Bibata-Modern-Classic";
 
-      qt5ctSettings = {
-        Fonts = {
-          fixed = "\"${self.font.mono},13\"";
-          general = "\"${self.font.mono},13\"";
+          # Set dark theme for GTK programs.
+          dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
+          # Set GTK theme.
+          gtk = {
+            enable = true;
+            gtk4.theme = null;
+            theme = {
+              name = "adw-gtk3-dark";
+              package = pkgs.adw-gtk3;
+            };
+            cursorTheme = {
+              name = "Bibata-Modern-Classic";
+              package = pkgs.bibata-cursors;
+              size = 20;
+            };
+            font = {
+              name = "${self.font.mono}";
+              size = 13;
+            };
+          };
+
+          # Make QT follow GTK theme.
+          qt = {
+            enable = true;
+            platformTheme.name = "gtk3";
+
+            qt5ctSettings = {
+              Fonts = {
+                fixed = "\"${self.font.mono},13\"";
+                general = "\"${self.font.mono},13\"";
+              };
+            };
+
+            qt6ctSettings = {
+              Fonts = {
+                fixed = "\"${self.font.mono},13\"";
+                general = "\"${self.font.mono},13\"";
+              };
+            };
+          };
         };
-      };
-
-      qt6ctSettings = {
-        Fonts = {
-          fixed = "\"${self.font.mono},13\"";
-          general = "\"${self.font.mono},13\"";
-        };
-      };
     };
-  };
-};}
+}

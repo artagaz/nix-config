@@ -1,87 +1,89 @@
-{ self, ... }: {
-  flake.nixosModules.matugen = { pkgs, lib, ... }:
-  {
-    imports = [
-      self.nixosModules.bash
-    ];
-
-    home-manager.users.${self.user}.imports = [
-    {    
-      home.packages = with pkgs; [ 
-        matugen
-        kdePackages.breeze
-        kdePackages.qt6ct
-        killall
-        libsForQt5.qt5ct
+{ self, ... }:
+{
+  flake.nixosModules.matugen =
+    { pkgs, lib, ... }:
+    {
+      imports = [
+        self.nixosModules.bash
       ];
 
-      xdg.configFile = {
-        "matugen/config.toml" = {
-          text = /* toml */ ''
-            [config]
-            [templates.gtk3]
-            input_path = '${builtins.toString ./templates/gtk-colors.css}'
-            output_path = '~/.config/gtk-3.0/colors.css'
+      home-manager.users.${self.user}.imports = [
+        {
+          home.packages = with pkgs; [
+            matugen
+            kdePackages.breeze
+            kdePackages.qt6ct
+            killall
+            libsForQt5.qt5ct
+          ];
 
-            [templates.gtk4]
-            input_path = '${builtins.toString ./templates/gtk-colors.css}'
-            output_path = '~/.config/gtk-4.0/colors.css'
+          xdg.configFile = {
+            "matugen/config.toml" = {
+              text = /* toml */ ''
+                [config]
+                [templates.gtk3]
+                input_path = '${toString ./templates/gtk-colors.css}'
+                output_path = '~/.config/gtk-3.0/colors.css'
 
-            [templates.color-scheme]
-            input_path = '${builtins.toString ./templates/Matugen.colors}'
-            output_path = '~/.local/share/color-schemes/Matugen.colors'
+                [templates.gtk4]
+                input_path = '${toString ./templates/gtk-colors.css}'
+                output_path = '~/.config/gtk-4.0/colors.css'
 
-            [templates.qt5ct]
-            input_path = '${builtins.toString ./templates/qtct-colors.conf}'
-            output_path = '~/.config/qt5ct/colors/matugen.conf'
+                [templates.color-scheme]
+                input_path = '${toString ./templates/Matugen.colors}'
+                output_path = '~/.local/share/color-schemes/Matugen.colors'
 
-            [templates.qt6ct]
-            input_path = '${builtins.toString ./templates/qtct-colors.conf}'
-            output_path = '~/.config/qt6ct/colors/matugen.conf'
+                [templates.qt5ct]
+                input_path = '${toString ./templates/qtct-colors.conf}'
+                output_path = '~/.config/qt5ct/colors/matugen.conf'
 
-            [templates.niri]
-            input_path = '${builtins.toString ./templates/niri-colors.kdl}'
-            output_path = '~/.config/niri/colors.kdl'
+                [templates.qt6ct]
+                input_path = '${toString ./templates/qtct-colors.conf}'
+                output_path = '~/.config/qt6ct/colors/matugen.conf'
 
-            [templates.waybar]
-            input_path = '${builtins.toString ./templates/colors.css}'
-            output_path = '~/.config/waybar/colors.css'
-          '';
-        };
+                [templates.niri]
+                input_path = '${toString ./templates/niri-colors.kdl}'
+                output_path = '~/.config/niri/colors.kdl'
 
-        "kdeglobals" = {
-          text = ''
-            [UiSettings]
-            ColorScheme=Matugen
-          '';
-        };
-      };
+                [templates.waybar]
+                input_path = '${toString ./templates/colors.css}'
+                output_path = '~/.config/waybar/colors.css'
+              '';
+            };
 
-      qt = {
-        enable = true;
-        platformTheme.name = lib.mkForce "qt6ct";
-
-        qt5ctSettings = {
-          Appearance = {
-            color_scheme_path = "/home/${self.user}/.config/qt5ct/colors/matugen.conf";
-            custom_palette = true;
+            "kdeglobals" = {
+              text = ''
+                [UiSettings]
+                ColorScheme=Matugen
+              '';
+            };
           };
-        };
 
-        qt6ctSettings = {
-          Appearance = {
-            color_scheme_path = "/home/${self.user}/.config/qt5ct/colors/matugen.conf";
-            custom_palette = true;
+          qt = {
+            enable = true;
+            platformTheme.name = lib.mkForce "qt6ct";
+
+            qt5ctSettings = {
+              Appearance = {
+                color_scheme_path = "/home/${self.user}/.config/qt5ct/colors/matugen.conf";
+                custom_palette = true;
+              };
+            };
+
+            qt6ctSettings = {
+              Appearance = {
+                color_scheme_path = "/home/${self.user}/.config/qt5ct/colors/matugen.conf";
+                custom_palette = true;
+              };
+            };
           };
-        };
-      };
 
-      gtk = {
-        enable = true;
-        gtk4.extraCss = "@import 'colors.css';";
-        gtk3.extraCss = "@import 'colors.css';";
-      };
-    }
-    ];
-  };
+          gtk = {
+            enable = true;
+            gtk4.extraCss = "@import 'colors.css';";
+            gtk3.extraCss = "@import 'colors.css';";
+          };
+        }
+      ];
+    };
 }
