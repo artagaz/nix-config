@@ -1,6 +1,7 @@
 { inputs, self, ... }:
 let
   wallpaper = "/home/${self.user}/Pictures/romashki.jpg";
+  ff_image = "/home/${self.user}/Pictures/logo.jpg";
 
   font = {
     mono = "JetBrainsMonoNerdFontMono";
@@ -18,6 +19,7 @@ in
     inherit font;
     inherit wallpaper;
     inherit border;
+    inherit ff_image;
 
     user = "andrei";
     mail = "vaylinnnn6@gmail.com";

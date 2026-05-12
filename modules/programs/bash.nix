@@ -14,6 +14,8 @@
             nrs = "sudo nixos-rebuild switch --flake .#nixos";
             nrt = "sudo nixos-rebuild test --flake .#nixos";
             pls = "sudo";
+            nsw = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
+            nca = "sudo nix-collect-garbage -d && sudo nix-collect-garbage";
           };
         };
       }

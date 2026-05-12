@@ -59,10 +59,8 @@
               };
 
               git_branch = {
-                # Скобки стоят снаружи стилевой разметки, так они точно отобразятся
-                format = "($symbol$branch )";
+                format = "❨[branch:$branch]($style)❩ ";
                 style = "bright-black";
-                symbol = "branch:"; # Выносим текст "branch:" в символ, чтобы было чище
               };
 
               git_status = {
@@ -89,7 +87,7 @@
               };
 
               cmd_duration = {
-                format = "took [   $duration]($style) ";
+                format = "took [ $duration]($style) ";
                 style = "yellow";
               };
 
